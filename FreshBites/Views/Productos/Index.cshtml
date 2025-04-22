@@ -1,9 +1,4 @@
-﻿@model IEnumerable<FreshBites.Models.Producto>
-@{
-    ViewData["Title"] = "Catálogo de Productos";
-}
-
-<div class="container py-4">
+﻿<div class="container py-4">
     <h2 class="text-center mb-4 text-success">🛒 Catálogo de Productos</h2>
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -33,4 +28,21 @@
             </div>
         }
     </div>
+
+    
+    @if (ViewBag.TotalPages > 1)
+    {
+        <div class="d-flex justify-content-center mt-4">
+            <nav aria-label="Paginación">
+                <ul class="pagination">
+                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == ViewBag.CurrentPage ? "active" : "")">
+                            <a class="page-link" asp-action="Index" asp-route-page="@i">@i</a>
+                        </li>
+                    }
+                </ul>
+            </nav>
+        </div>
+    }
 </div>

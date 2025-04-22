@@ -1,4 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Http;
+
 
 namespace FreshBites.Models
 {
@@ -18,6 +21,10 @@ namespace FreshBites.Models
         public int Stock { get; set; }
 
         public string ImagenUrl { get; set; }
+
+        [NotMapped]
+        public IFormFile? ImagenArchivo { get; set; }
+
     }
 
 }

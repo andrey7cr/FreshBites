@@ -8,7 +8,7 @@
     <div class="container mt-5">
         <div class="card shadow p-4 bg-white bg-opacity-75">
             <h2 class="text-success mb-4">➕ Crear nuevo producto</h2>
-            <form asp-action="Crear">
+            <form asp-action="Crear" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label asp-for="Nombre" class="form-label"></label>
                     <input asp-for="Nombre" class="form-control" />
@@ -34,9 +34,9 @@
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="ImagenUrl" class="form-label">URL de imagen</label>
-                    <input asp-for="ImagenUrl" class="form-control" />
-                    <span asp-validation-for="ImagenUrl" class="text-danger"></span>
+                    <label class="form-label">Imagen del producto</label>
+                    <input asp-for="ImagenArchivo" type="file" class="form-control" accept="image/*" />
+                    <span asp-validation-for="ImagenArchivo" class="text-danger"></span>
                 </div>
 
                 <button type="submit" class="btn btn-success">Guardar</button>

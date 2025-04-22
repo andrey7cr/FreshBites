@@ -32,9 +32,9 @@
                             <img src="@item.Producto.ImagenUrl" width="70" class="me-2 rounded" />
                             <strong>@item.Producto.Nombre</strong>
                         </td>
-                        <td>₡@item.Producto.Precio.ToString("N2")</td>
+                        <td>₡@(item.Producto.Precio)</td>
                         <td>@item.Cantidad</td>
-                        <td>₡@(item.Cantidad * item.Producto.Precio).ToString("N2")</td>
+                        <td>₡@(item.Cantidad * item.Producto.Precio)</td>
                         <td>
                             <a asp-action="Eliminar" asp-route-id="@item.Producto.Id" class="btn btn-sm btn-outline-danger">🗑 Eliminar</a>
                         </td>

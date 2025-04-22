@@ -1,0 +1,36 @@
+﻿<div class="container mt-5">
+    <h2 class="text-success mb-4">🛠 Panel de administración</h2>
+
+    <div class="d-flex justify-content-end mb-3">
+        <a asp-action="Crear" class="btn btn-success">➕ Añadir producto</a>
+    </div>
+
+    <table class="table table-striped table-bordered shadow-sm">
+        <thead class="table-success">
+            <tr>
+                <th>Imagen</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var producto in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="@producto.ImagenUrl" width="60" class="rounded shadow-sm" />
+                    </td>
+                    <td>@producto.Nombre</td>
+                    <td>₡@producto.Precio.ToString("N2")</td>
+                    <td>@producto.Stock</td>
+                    <td>
+                        <a asp-action="Editar" asp-route-id="@producto.Id" class="btn btn-warning btn-sm">✏️ Editar</a>
+                        <a asp-action="Eliminar" asp-route-id="@producto.Id" class="btn btn-danger btn-sm">🗑 Eliminar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

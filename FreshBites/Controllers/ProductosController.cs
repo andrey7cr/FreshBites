@@ -17,27 +17,66 @@ namespace FreshBites.Controllers
         }
 
         // GET: Productos
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1, int pageSize = 6)
         {
-            return View(await _context.Productos.ToListAsync());
+            var totalProductos = await _context.Productos.CountAsync();
+            var productos = await _context.Productos
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = (int)Math.Ceiling(totalProductos / (double)pageSize);
+
+            return View(productos);
         }
+
+
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> Gestion()
+        {
+            var productos = await _context.Productos.ToListAsync();
+            return View(productos);
+        }
+
 
         [Authorize(Roles = "Administrador")]
         public IActionResult Crear() => View();
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Crear(Producto producto)
         {
+            if (producto.ImagenArchivo != null && producto.ImagenArchivo.Length > 0)
+            {
+                string rutaCarpeta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images");
+                Directory.CreateDirectory(rutaCarpeta);
+
+                string nombreArchivo = Guid.NewGuid().ToString() + Path.GetExtension(producto.ImagenArchivo.FileName);
+                string rutaCompleta = Path.Combine(rutaCarpeta, nombreArchivo);
+
+                using (var stream = new FileStream(rutaCompleta, FileMode.Create))
+                {
+                    await producto.ImagenArchivo.CopyToAsync(stream);
+                }
+
+                producto.ImagenUrl = "/images/" + nombreArchivo;
+            }
+
+            
+            ModelState.Remove(nameof(producto.ImagenUrl));
+
             if (ModelState.IsValid)
             {
                 _context.Add(producto);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             return View(producto);
         }
+
+
 
         public async Task<IActionResult> Editar(int? id)
         {
