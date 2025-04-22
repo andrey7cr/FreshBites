@@ -1,5 +1,5 @@
 ﻿<div class="container py-4">
-    <h2 class="text-center mb-4 text-success">🛒 Catálogo de Productos</h2>
+    <h1 class="text-center mb-4 text-success">🛒 Catálogo de Productos</h1>
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
         @foreach (var producto in Model)
@@ -8,8 +8,8 @@
                 <div class="card h-100 shadow-sm border-0">
                     <img src="@producto.ImagenUrl" class="card-img-top" alt="@producto.Nombre" style="height: 220px; object-fit: cover;" />
                     <div class="card-body">
-                        <h5 class="card-title">@producto.Nombre</h5>
-                        <p class="card-text text-muted">@producto.Descripcion</p>
+                        <h2 class="card-title fs-5">@producto.Nombre</h2>
+                        <p class="card-text fs-6 text-muted">@producto.Descripcion</p>
                         <p class="card-text fw-bold text-success">₡@producto.Precio.ToString("N2")</p>
                     </div>
                     <div class="card-footer bg-transparent border-0 text-center">
