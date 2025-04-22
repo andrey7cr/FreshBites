@@ -1,0 +1,36 @@
+﻿@model IEnumerable<FreshBites.Models.Producto>
+@{
+    ViewData["Title"] = "Catálogo de Productos";
+}
+
+<div class="container py-4">
+    <h2 class="text-center mb-4 text-success">🛒 Catálogo de Productos</h2>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var producto in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0">
+                    <img src="@producto.ImagenUrl" class="card-img-top" alt="@producto.Nombre" style="height: 220px; object-fit: cover;" />
+                    <div class="card-body">
+                        <h5 class="card-title">@producto.Nombre</h5>
+                        <p class="card-text text-muted">@producto.Descripcion</p>
+                        <p class="card-text fw-bold text-success">₡@producto.Precio.ToString("N2")</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 text-center">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <a asp-controller="Carrito" asp-action="Agregar" asp-route-id="@producto.Id"
+                               class="btn btn-outline-success btn-sm">🛒 Agregar al carrito</a>
+                        }
+                        else
+                        {
+                            <a asp-controller="Account" asp-action="Login"
+                               class="btn btn-outline-secondary btn-sm" title="Iniciá sesión para agregar productos">🔒 Iniciar sesión</a>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
